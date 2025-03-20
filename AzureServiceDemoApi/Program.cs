@@ -4,11 +4,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+string corsDomains = builder.Configuration.GetSection("AppCORS").Value;
+string[] domains = corsDomains.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+builder.Services.AddCors(o => o.AddPolicy("AppCORSPolicy", builder =>
+{
+	builder.AllowAnyOrigin()
+		   .AllowAnyMethod()
+		   .AllowAnyHeader()
+		   .AllowCredentials()
+		   .WithOrigins(domains);
+}));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
+
+app.UseCors("AppCORSPolicy");
 
 app.UseAuthorization();
 
