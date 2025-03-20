@@ -1,3 +1,4 @@
+using AzureServiceDemoApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AzureServiceDemoApi.Controllers
@@ -29,5 +30,12 @@ namespace AzureServiceDemoApi.Controllers
             })
             .ToArray();
         }
-    }
+
+		[HttpGet("{id}")]
+		public IActionResult GetById(int id)
+		{
+            string Summarie = Summaries[id];
+			return Ok(Summarie);
+		}
+	}
 }
