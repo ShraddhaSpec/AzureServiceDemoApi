@@ -7,14 +7,22 @@ builder.Services.AddControllers();
 string corsDomains = builder.Configuration.GetSection("AppCORS").Value;
 string[] domains = corsDomains.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-builder.Services.AddCors(o => o.AddPolicy("AppCORSPolicy", builder =>
+//builder.Services.AddCors(o => o.AddPolicy("AppCORSPolicy", builder =>
+//{
+//	builder.AllowAnyOrigin()
+//		   .AllowAnyMethod()
+//		   .AllowAnyHeader()
+//		   .AllowCredentials()
+//		   .WithOrigins(domains);
+//}));
+
+builder.Services.AddCors(options =>
 {
-	builder.AllowAnyOrigin()
-		   .AllowAnyMethod()
-		   .AllowAnyHeader()
-		   .AllowCredentials()
-		   .WithOrigins(domains);
-}));
+	options.AddPolicy("AllowAll",
+		policy => policy.AllowAnyOrigin()
+						.AllowAnyMethod()
+						.AllowAnyHeader());
+});
 
 var app = builder.Build();
 
@@ -22,7 +30,8 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-app.UseCors("AppCORSPolicy");
+//app.UseCors("AppCORSPolicy");
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
