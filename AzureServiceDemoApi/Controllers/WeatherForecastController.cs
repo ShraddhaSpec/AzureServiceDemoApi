@@ -22,7 +22,6 @@ namespace AzureServiceDemoApi.Controllers
         }
 
         [HttpGet]
-		[AllowAnonymous]
 		public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -35,7 +34,6 @@ namespace AzureServiceDemoApi.Controllers
         }
 
 		[HttpGet("{id}")]
-		[AllowAnonymous]
 		public IActionResult GetById(int id)
 		{
             string Summarie = Summaries[id];
