@@ -34,6 +34,6 @@ app.UseCors("AppCORSPolicy");
 //app.UseCors("AllowAll");
 
 app.UseAuthentication();        // Ensure authentication middleware is present
-app.MapControllers().AllowAnonymous();
+app.MapControllers();
 
 app.Run();
